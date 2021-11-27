@@ -31,6 +31,9 @@ mongoose.connect(process.env.MONGO_URI, (err, connection) => {
     console.log(`DB connected`);
   }
 });
+app.get("/", (req, res) => {
+  res.send("Hello");
+});
 app.post("/poster/sms", async (req, res) => {
   try {
     let poster = await smsPoster.create({
@@ -113,7 +116,8 @@ app.get("/candidate/sms/:chestNo", async (req, res) => {
 });
 app.get("/candidate/chs/:chestNo", async (req, res) => {
   try {
-    let data = await Chs.findOne({ chestNo: req.params.chestNo });
+    let data = await Chs.findOne({ adm: req.params.chestNo });
+    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
